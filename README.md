@@ -101,9 +101,11 @@ PDF files ─► Parse (PyMuPDF) ─► Sections ─► Chunks ─► LLM extrac
 ### 1. Get the code
 
 ```
-git clone https://github.com/<your-username>/<repo-name>.git
-cd <repo-name>
+git clone https://github.com/kingalok18/claimgraph.git
+cd claimgraph
 ```
+
+Repository: **https://github.com/kingalok18/claimgraph**
 
 ### 2. Create the MySQL databases
 
