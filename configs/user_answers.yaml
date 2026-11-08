@@ -1,0 +1,18 @@
+# Answers from the setup questions (Section 0.2). Date: 2026-11-06
+papers_location: paper            # the user's folder is named "paper"; kept as it is
+paper_count_at_setup: 46
+field: image and document forgery detection, adversarial training, GANs
+research_questions: []            # discover topics automatically
+online_search: false              # module is built, switched off
+openalex_email: null
+main_llm: Qwen/Qwen2.5-3B-Instruct-GGUF  # free, runs locally; user chose Hugging Face over Ollama
+database: mysql                   # the MySQL 8.0 on this PC, user root
+pdf_parsing: pymupdf              # user's request
+nli_finetuning: kaggle            # base model now; Kaggle notebook provided
+eval_datasets: [scifact]
+hand_labels_later: true
+hf_token: blank
+app_name: ClaimGraph
+default_theme: light
+working_folder_confirmed: true
+first_run: sample_of_5            # the full run is started from the Library screen

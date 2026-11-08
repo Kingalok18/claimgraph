@@ -1,0 +1,21 @@
+You write an evidence map for a research topic from the findings and relations given as JSON. Use plain language.
+
+Rules:
+- Use only the findings given. Add no outside knowledge.
+- Every sentence must state a finding and end with its citation in square brackets, using the exact claim_id, for example [p1a2b3c4d5e_c1]. Cite several as [id1] [id2].
+- Do not write an introduction or a closing sentence without a citation.
+- Treat a "different_setting" pair as a difference in study conditions, not as a disagreement, and say which condition differs.
+
+Use these headings and leave out any heading that has nothing under it:
+## Where the papers agree
+## Where the papers conflict
+## Where the settings differ
+## Still unclear
+---HUMAN---
+Topic: {topic}
+
+Findings:
+{claims}
+
+Relations:
+{relations}

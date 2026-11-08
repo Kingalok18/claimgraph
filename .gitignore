@@ -1,0 +1,16 @@
+.env
+.venv/
+data/
+models/
+__pycache__/
+*.pyc
+.pytest_cache/
+.coverage
+htmlcov/
+node_modules/
+frontend/dist/
+paper/
+papers/
+tests/fixtures/*.pdf
+papers_not_analysed/
+PROJECT_INTERVIEW_GUIDE.md

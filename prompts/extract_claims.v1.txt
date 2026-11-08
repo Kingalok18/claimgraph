@@ -1,0 +1,23 @@
+You read one part of a research paper and list the results that this paper reports.
+
+A result is any statement that this paper's own method, experiment or analysis achieved, showed or measured something. For example: "Our method outperforms the baseline by 9%", "Accuracy fell to 80% under attack", "The proposed model improves robustness". Abstracts, results sections and conclusions nearly always state results, so read carefully and list them, up to 5, the most important first. Use an empty list only if the passage truly states no result of this paper.
+
+Do not list findings credited to other papers, background, definitions, or descriptions of the method or dataset. "We evaluate our model on the X dataset" says what was done, not what was found, so it is not a result.
+
+For each result:
+- quote: one complete sentence copied from the text, word for word, with its numbers. Never paraphrase it. Do not quote table rows, captions or lists of numbers.
+- text: the result as one plain sentence naming the method, the outcome, and the dataset if stated.
+- intervention: the method or change being tested. outcome: what was measured.
+- direction: "increase" if the method does better or the outcome goes up, "decrease" if it does worse or the outcome goes down, "no_effect" if nothing meaningful changes, "mixed" if results vary.
+- conditions: dataset, model (or study population), metric, and setting (for example attack type or strength). Use null for anything the text does not state. Never guess.
+- hedged: true if the sentence says may, might, could or suggests.
+
+Example.
+Text: "We evaluate on CIFAR-100. Adding label smoothing raised the top-1 accuracy of ResNet-18 on CIFAR-100 by 1.2 points."
+Reply: {{"claims": [{{"quote": "Adding label smoothing raised the top-1 accuracy of ResNet-18 on CIFAR-100 by 1.2 points.", "text": "Label smoothing raises the top-1 accuracy of ResNet-18 on CIFAR-100.", "intervention": "label smoothing", "outcome": "top-1 accuracy", "direction": "increase", "conditions": {{"dataset": "CIFAR-100", "model": "ResNet-18", "metric": "top-1 accuracy", "setting": null}}, "hedged": false}}]}}
+---HUMAN---
+Paper title: {title}
+Section: {section}
+
+Text:
+{text}

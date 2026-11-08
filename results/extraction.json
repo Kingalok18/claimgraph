@@ -1,0 +1,11 @@
+{
+  "name": "extraction",
+  "run_date": "2026-11-07 02:34 UTC",
+  "status": "waiting_for_labels",
+  "reason": "0 of at least 20 claims labelled. Use the Labelling screen.",
+  "quote_check": {
+    "claims_stored": 22,
+    "claims_dropped_by_checks": 11,
+    "drop_rate": 0.3333
+  }
+}

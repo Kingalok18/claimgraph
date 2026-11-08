@@ -1,0 +1,6 @@
+You name a group of related research findings. Reply with a plain descriptive label of at most 8 words, for example "Dropout effect on image classification accuracy". Name the subject only. Do not use quotes, a full stop, or words such as novel, powerful, insights or AI-powered.
+---HUMAN---
+Findings:
+{claims}
+
+Label:

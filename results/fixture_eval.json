@@ -1,0 +1,132 @@
+{
+  "name": "fixture_eval",
+  "run_date": "2026-11-07 02:19 UTC",
+  "claims_found": 4,
+  "claims_planted": 4,
+  "planted": {
+    "A1": "p19b5cd3186_c1",
+    "B1": "pa5849cf417_c1",
+    "C1": "p90a897f383_c1",
+    "D1": "peb54c2fcdd_c1"
+  },
+  "relations": [
+    {
+      "a": "A1",
+      "b": "B1",
+      "expected": "supports",
+      "got": "supports",
+      "nli_label": "entailment",
+      "nli_prob": 0.993,
+      "conditions_match": "same",
+      "ok": true
+    },
+    {
+      "a": "A1",
+      "b": "C1",
+      "expected": "contradicts",
+      "got": "contradicts",
+      "nli_label": "contradiction",
+      "nli_prob": 1.0,
+      "conditions_match": "same",
+      "ok": true
+    },
+    {
+      "a": "B1",
+      "b": "C1",
+      "expected": "contradicts",
+      "got": "contradicts",
+      "nli_label": "contradiction",
+      "nli_prob": 1.0,
+      "conditions_match": "same",
+      "ok": true
+    },
+    {
+      "a": "A1",
+      "b": "D1",
+      "expected": "different_setting",
+      "got": "different_setting",
+      "nli_label": "contradiction",
+      "nli_prob": 0.999,
+      "conditions_match": "different",
+      "ok": true
+    },
+    {
+      "a": "B1",
+      "b": "D1",
+      "expected": "different_setting",
+      "got": "different_setting",
+      "nli_label": "contradiction",
+      "nli_prob": 0.999,
+      "conditions_match": "different",
+      "ok": true
+    }
+  ],
+  "relations_correct": 5,
+  "relations_expected": 5,
+  "all_quotes_verified": true,
+  "claims_stored": 4,
+  "seconds": 571.0,
+  "database": "mysql",
+  "summary": {
+    "extraction": {
+      "papers": 4,
+      "proposed": 12,
+      "kept": 4,
+      "dropped": 8,
+      "chunks_failed": 0,
+      "drop_rate": 0.6667
+    },
+    "indexed": 4,
+    "topics": {
+      "topics_total": 1,
+      "topics_new": 1
+    },
+    "pairs_created": 6,
+    "relations": {
+      "pairs_scored": 6,
+      "llm_compares": 0
+    },
+    "labelled": 1
+  },
+  "claims": [
+    {
+      "claim_id": "p19b5cd3186_c1",
+      "paper_id": "p19b5cd3186",
+      "quote": "Adding dropout increased the test accuracy of ResNet-50 on CIFAR-10 from 92.1 percent to 93.4 percent.",
+      "quote_verified": true,
+      "text": "Adding dropout increased the test accuracy of ResNet-50 on CIFAR-10."
+    },
+    {
+      "claim_id": "p90a897f383_c1",
+      "paper_id": "p90a897f383",
+      "quote": "Adding dropout decreased the test accuracy of ResNet-50 on CIFAR-10 from 93.0 percent to 91.8 percent.",
+      "quote_verified": true,
+      "text": "Adding dropout decreased the test accuracy of ResNet-50 on CIFAR-10."
+    },
+    {
+      "claim_id": "pa5849cf417_c1",
+      "paper_id": "pa5849cf417",
+      "quote": "Adding dropout increased the test accuracy of ResNet-50 on CIFAR-10 from 92.4 percent to 93.5 percent.",
+      "quote_verified": true,
+      "text": "Adding dropout increased the test accuracy of ResNet-50 on CIFAR-10."
+    },
+    {
+      "claim_id": "peb54c2fcdd_c1",
+      "paper_id": "peb54c2fcdd",
+      "quote": "Adding dropout decreased the test accuracy of ResNet-50 on ImageNet from 76.2 percent to 75.1 percent.",
+      "quote_verified": true,
+      "text": "Adding dropout decreases test accuracy of ResNet-50 on ImageNet."
+    }
+  ],
+  "report": {
+    "relations_in_right_section": 5,
+    "relations_checked": 5,
+    "model": "qwen2.5-3b-instruct-q4_k_m.gguf",
+    "text": "## Where the papers agree\nAdding dropout increased the test accuracy of ResNet-50 on CIFAR-10. [p19b5cd3186_c1] [pa5849cf417_c1]\n\n## Where the papers conflict\n\"Adding dropout increased the test accuracy of ResNet-50 on CIFAR-10\" conflicts with \"Adding dropout decreased the test accuracy of ResNet-50 on CIFAR-10\" (The stated conditions match). [p19b5cd3186_c1] [p90a897f383_c1]\n\"Adding dropout decreased the test accuracy of ResNet-50 on CIFAR-10\" conflicts with \"Adding dropout increased the test accuracy of ResNet-50 on CIFAR-10\" (The stated conditions match). [p90a897f383_c1] [pa5849cf417_c1]\n\n## Where the settings differ\n\"Adding dropout increased the test accuracy of ResNet-50 on CIFAR-10\" and \"Adding dropout decreases test accuracy of ResNet-50 on ImageNet\" were measured differently (dataset: CIFAR-10 in the first, ImageNet in the second). [p19b5cd3186_c1] [peb54c2fcdd_c1]\n\"Adding dropout increased the test accuracy of ResNet-50 on CIFAR-10\" and \"Adding dropout decreases test accuracy of ResNet-50 on ImageNet\" were measured differently (dataset: CIFAR-10 in the first, ImageNet in the second). [pa5849cf417_c1] [peb54c2fcdd_c1]\n\n## Still unclear\n\"Adding dropout decreased the test accuracy of ResNet-50 on CIFAR-10\" cannot yet be compared with \"Adding dropout decreases test accuracy of ResNet-50 on ImageNet\". [p90a897f383_c1] [peb54c2fcdd_c1]",
+    "reports": 1,
+    "model_sentences_removed": 4,
+    "seconds": 147.4
+  },
+  "llm": "qwen2.5-3b-instruct-q4_k_m.gguf",
+  "status": "measured"
+}

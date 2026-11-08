@@ -1,0 +1,31 @@
+# Free models from Hugging Face, run on this PC. Nothing is sent to an outside service.
+llm:
+  provider: hf_gguf           # hf_gguf | ollama | hf_local | hf_endpoint
+  hf_model_id: Qwen/Qwen2.5-3B-Instruct-GGUF
+  gguf_file: qwen2.5-3b-instruct-q4_k_m.gguf
+  model: qwen2.5:3b-instruct  # used only by the ollama provider
+  temperature: 0.1
+  max_retries: 3
+  num_ctx: 4096
+  num_predict: 900
+  n_threads: 4                # physical cores of the i5-10210U
+llm_small:
+  provider: hf_gguf
+  hf_model_id: Qwen/Qwen2.5-3B-Instruct-GGUF
+  gguf_file: qwen2.5-3b-instruct-q4_k_m.gguf
+  model: qwen2.5:3b-instruct
+  temperature: 0.1
+  max_retries: 2
+  num_ctx: 4096               # same as llm, so that both share one loaded model
+  num_predict: 200
+  n_threads: 4
+embeddings:
+  model_id: BAAI/bge-m3
+  device: cpu
+  batch_size: 8
+nli:
+  base_model_id: cross-encoder/nli-deberta-v3-base
+  finetuned_path: models/nli-scifact   # used if present, else base model
+  device: cpu
+  batch_size: 8
+  max_length: 256

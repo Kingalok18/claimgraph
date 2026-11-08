@@ -1,0 +1,177 @@
+@import "@fontsource-variable/inter";
+@import "@fontsource-variable/source-serif-4";
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  color-scheme: light;
+  --bg: #fafaf7;
+  --surface: #ffffff;
+  --subtle: #f2f2ed;
+  --text: #1f2328;
+  --text-2: #5b616b;
+  --border: #e3e3de;
+  --accent: #0f5f5f;
+  --accent-ink: #ffffff;
+  --supports: #2f7d4f;
+  --contradicts: #b23a3a;
+  --setting: #8a8f98;
+  --unclear: #c9a227;
+  --unclear-ink: #80670f;
+  --setting-ink: #5f646d;
+  --mark: rgba(201, 162, 39, 0.32);
+  --diff: rgba(201, 162, 39, 0.14);
+}
+
+:root[data-theme="dark"] {
+  color-scheme: dark;
+  --bg: #16181b;
+  --surface: #1e2125;
+  --subtle: #26292e;
+  --text: #e7e8e6;
+  --text-2: #a2a8b0;
+  --border: #33373d;
+  --accent: #5fb3b3;
+  --accent-ink: #0f1a1a;
+  --supports: #6dbb8b;
+  --contradicts: #e08585;
+  --setting: #9aa0a9;
+  --unclear: #d9b84a;
+  --unclear-ink: #d9b84a;
+  --setting-ink: #b0b5bd;
+  --mark: rgba(217, 184, 74, 0.3);
+  --diff: rgba(217, 184, 74, 0.12);
+}
+
+html,
+body,
+#root {
+  height: 100%;
+}
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: "Inter Variable", system-ui, sans-serif;
+  font-size: 14.5px;
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+}
+
+.tabular {
+  font-variant-numeric: tabular-nums;
+}
+
+:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 1px;
+}
+
+.btn {
+  @apply inline-flex items-center gap-1.5 rounded border border-line bg-surface px-3 py-1.5 text-[13.5px] font-medium text-ink transition-colors;
+}
+.btn:hover:not(:disabled) {
+  background: var(--subtle);
+}
+.btn:disabled {
+  color: var(--text-2);
+  cursor: default;
+}
+.btn-primary {
+  @apply border-accent bg-accent text-accent-ink;
+}
+.btn-primary:hover:not(:disabled) {
+  background: var(--accent);
+  opacity: 0.9;
+}
+.btn-primary:disabled {
+  color: var(--accent-ink);
+  opacity: 0.55;
+}
+
+/* In the components layer so that utilities such as pl-8 on a single input can override the padding. */
+@layer components {
+  .input {
+    @apply rounded border border-line bg-surface px-2.5 py-1.5 text-[13.5px] text-ink transition-colors;
+  }
+}
+.input::placeholder {
+  color: var(--text-2);
+}
+
+.card {
+  @apply rounded border border-line bg-surface;
+}
+
+.quote {
+  @apply font-serif text-[16px] leading-[1.6];
+}
+
+.skeleton {
+  background: var(--subtle);
+  border-radius: 4px;
+  animation: skeleton-pulse 1.4s ease-in-out infinite;
+}
+
+@keyframes skeleton-pulse {
+  50% {
+    opacity: 0.55;
+  }
+}
+
+.strip-indeterminate {
+  animation: strip-slide 1.6s ease-in-out infinite;
+  width: 30%;
+}
+
+@keyframes strip-slide {
+  from {
+    transform: translateX(-100%);
+  }
+  to {
+    transform: translateX(340%);
+  }
+}
+
+.report-body h2 {
+  @apply mb-2 mt-7 font-sans text-[15px] font-semibold;
+}
+.report-body p {
+  @apply mb-3;
+}
+
+.cite {
+  @apply ml-0.5 cursor-pointer align-super font-sans text-[10.5px] font-semibold text-accent;
+  text-decoration: none;
+}
+.cite:hover {
+  text-decoration: underline;
+}
+
+.textLayer mark {
+  background: var(--mark);
+  color: transparent;
+  border-radius: 2px;
+}
+
+.react-pdf__Page canvas {
+  display: block;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+@media print {
+  header,
+  .no-print {
+    display: none !important;
+  }
+}

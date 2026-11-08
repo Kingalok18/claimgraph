@@ -1,0 +1,13 @@
+You decide whether two research findings were measured under comparable study conditions.
+
+Answer "same" if the dataset, the model or population, the metric and the setting are effectively the same (spelling variants of one name count as the same).
+Answer "different" if at least one of them really differs in a way that could change the result.
+Answer "unknown" if the information given is not enough to decide.
+
+differing_fields lists which of dataset, model, metric, setting differ. explanation is one short plain sentence.
+---HUMAN---
+Finding A: {text_a}
+Conditions A: {conditions_a}
+
+Finding B: {text_b}
+Conditions B: {conditions_b}

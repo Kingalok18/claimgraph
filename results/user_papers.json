@@ -1,0 +1,70 @@
+{
+  "name": "user_papers",
+  "run_date": "2026-11-06 20:46 UTC",
+  "status": "measured",
+  "sample": "hand-picked to share a subject (document forgery), not a random sample",
+  "papers_in_folder": 46,
+  "pdfs_unchanged": true,
+  "seconds_this_run": 316.1,
+  "extraction_this_run": {
+    "papers": 1,
+    "proposed": 1,
+    "kept": 0,
+    "dropped": 1,
+    "chunks_failed": 0,
+    "drop_rate": 1.0
+  },
+  "papers_in_sample": 5,
+  "claims_kept": 22,
+  "claims_dropped": 11,
+  "drop_rate": 0.3333,
+  "claims_with_unverified_quote": 0,
+  "topics": 6,
+  "pairs": 29,
+  "pairs_supports": 0,
+  "pairs_contradicts": 0,
+  "pairs_different_setting": 8,
+  "pairs_unclear": 21,
+  "per_paper": [
+    {
+      "file": "ADCD-Net_Robust_Document_Image_Forgery_Localization_via_Adaptive_DCT_Feature_and_Hierarchical_Content_Disentanglement.pdf",
+      "status": "done",
+      "chunks_done": 5,
+      "chunks_total": 5,
+      "claims_kept": 7,
+      "claims_dropped": 2
+    },
+    {
+      "file": "TSFE-Net_Document_Image_Forgery_Localization_via_Text_Structural_Feature_Enhancement.pdf",
+      "status": "done",
+      "chunks_done": 3,
+      "chunks_total": 3,
+      "claims_kept": 1,
+      "claims_dropped": 2
+    },
+    {
+      "file": "Towards_Robust_Tampered_Text_Detection_in_Document_Image_New_Dataset_and_New_Solution.pdf",
+      "status": "done",
+      "chunks_done": 5,
+      "chunks_total": 5,
+      "claims_kept": 6,
+      "claims_dropped": 4
+    },
+    {
+      "file": "Document_Image_Forgery_Detection_Based_on_Deep_Learning_Models.pdf",
+      "status": "done",
+      "chunks_done": 3,
+      "chunks_total": 3,
+      "claims_kept": 2,
+      "claims_dropped": 2
+    },
+    {
+      "file": "Intelligent_Multimodal_Ai_System_for_Identity_Document_Forgery_Detection.pdf",
+      "status": "done",
+      "chunks_done": 4,
+      "chunks_total": 4,
+      "claims_kept": 6,
+      "claims_dropped": 1
+    }
+  ]
+}

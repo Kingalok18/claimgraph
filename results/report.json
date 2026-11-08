@@ -1,0 +1,11 @@
+{
+  "name": "report",
+  "run_date": "2026-11-07 02:29 UTC",
+  "status": "measured",
+  "reports": 3,
+  "citations": 16,
+  "unresolved_citations": 0,
+  "model_sentences_removed": 0,
+  "reports_using_template": 3,
+  "sentences_failing_check_after_cleanup": 0
+}

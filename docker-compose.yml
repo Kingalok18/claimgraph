@@ -1,0 +1,17 @@
+# Nothing here is needed on this install: it uses MySQL on the PC, PyMuPDF and local Qdrant.
+# These services stay off unless asked for: docker compose --profile optional up -d
+services:
+  grobid:
+    image: lfoppiano/grobid:0.8.2
+    profiles: [optional]
+    ports:
+      - "8070:8070"
+  qdrant:
+    image: qdrant/qdrant:v1.15.5
+    profiles: [optional]
+    ports:
+      - "6333:6333"
+    volumes:
+      - qdrant_data:/qdrant/storage
+volumes:
+  qdrant_data:

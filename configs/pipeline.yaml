@@ -1,0 +1,33 @@
+app_name: ClaimGraph
+default_theme: light
+papers_dir: paper
+online_search:
+  enabled: false
+  max_papers: 50
+  max_loops: 3
+parsing:
+  backend: pymupdf            # grobid | pymupdf
+extraction:
+  sections: [abstract, results, discussion, conclusion]
+  chunk_chars: 4000
+  chunk_overlap: 300
+  max_chunks_per_paper: 12    # bounds the time one long paper can take on a CPU
+quote_verify:
+  fuzzy_threshold: 95
+  min_quote_chars: 20
+topics:
+  min_cluster_size: 2
+  attach_noise_similarity: 0.60  # unclustered claims join the nearest topic above this
+  merge_similarity: 0.85         # clusters this close are one topic; HDBSCAN splits identical claims
+  question_similarity: 0.45
+  question_top_k: 30
+pairs:
+  neighbours_per_claim: 10
+relations:
+  nli_contradict_threshold: 0.6
+  nli_support_threshold: 0.6
+  max_llm_compares: 200      # bounds the slow LLM step on a CPU; beyond this, conditions stay unknown
+report:
+  max_claims: 25
+  max_relations: 25
+scan_on_start: true
