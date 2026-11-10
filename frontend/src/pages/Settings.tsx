@@ -16,16 +16,6 @@ function Row({ name, ok, children }: { name: string; ok?: boolean; children: Rea
   );
 }
 
-const SHORTCUTS = [
-  ["/", "Search"],
-  ["j, k", "Move through a list"],
-  ["Enter", "Open the current row"],
-  ["Esc", "Close a panel"],
-  ["g then l, t, r", "Library, Topics, Report"],
-  ["1 to 4", "Label a claim pair"],
-  ["Left, Right", "Previous and next PDF page"],
-];
-
 export default function SettingsPage() {
   const health = useQuery({ queryKey: ["health"], queryFn: api.health, staleTime: 5000 });
   const [theme, chooseTheme] = useState<ThemeChoice>(getTheme());
@@ -81,22 +71,6 @@ export default function SettingsPage() {
           </div>
         )}
 
-        <h2 className="mb-2 mt-6 text-[13.5px] font-semibold">Folders and options</h2>
-        <div className="card">
-          <Row name="Papers folder">{health.data?.settings.papers_dir ?? ""}</Row>
-          <Row name="PDF reading">{health.data?.settings.parsing_backend === "pymupdf" ? "PyMuPDF" : "GROBID"}</Row>
-          <Row name="Online search">{health.data?.settings.online_search ? "On" : "Off. Change it in configs/pipeline.yaml."}</Row>
-        </div>
-
-        <h2 className="mb-2 mt-6 text-[13.5px] font-semibold">Keyboard</h2>
-        <div className="card px-4 py-2 text-[13.5px]">
-          {SHORTCUTS.map(([keys, action]) => (
-            <div key={keys} className="flex gap-3 py-1">
-              <kbd className="w-32 flex-none font-sans text-muted">{keys}</kbd>
-              <span>{action}</span>
-            </div>
-          ))}
-        </div>
       </div>
     </div>
   );

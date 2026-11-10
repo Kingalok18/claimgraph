@@ -212,7 +212,7 @@ On a laptop CPU one paper takes about 10–15 minutes, so a whole library is bes
 | Pair view | Two quotes side by side with their conditions compared; confirm or correct the relation here |
 | Report | An evidence map with citations, exported as Markdown or PDF |
 | Labelling | Fast keyboard checking of claims and pairs, which is what accuracy is measured against |
-| Settings | Theme, folders, and the status of each model and service, with what to do if something is missing |
+| Settings | Theme, and the status of each model and service, with what to do if something is missing |
 
 **Keys:**
 
