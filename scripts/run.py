@@ -3,9 +3,7 @@
   setup     create .venv, install Python and npm packages, download models, build the frontend
   up        start Docker services (none are needed on this install)
   start     start the app and open the browser
-  test      run all tests and print a summary
   eval      run the evaluations and write results/
-  fixtures  rebuild the test PDFs
 """
 from __future__ import annotations
 
@@ -30,7 +28,6 @@ def env() -> dict:
     values = dict(os.environ)
     values["PYTHONPATH"] = str(ROOT / "src") + os.pathsep + values.get("PYTHONPATH", "")
     values["PYTHONIOENCODING"] = "utf-8"
-    values["PLAYWRIGHT_BROWSERS_PATH"] = str(VENV / "playwright")  # keeps the browser inside the project
     values.setdefault("TOKENIZERS_PARALLELISM", "false")
     return values
 
@@ -63,9 +60,7 @@ def cmd_setup() -> None:
         run(sys.executable, "-m", "venv", VENV)
     run(PY, "-m", "pip", "install", "--upgrade", "pip", "--quiet")
     run(PY, "-m", "pip", "install", "-r", ROOT / "requirements.txt")
-    run(PY, "-m", "playwright", "install", "chromium")
     build_frontend()
-    run(PY, ROOT / "scripts" / "make_fixture_papers.py")
     run(PY, "-c", "from claimgraph.db import init_db; init_db()")
     print("Downloading models from Hugging Face. This happens once.")
     run(
@@ -110,28 +105,15 @@ def cmd_start() -> None:
         print("Stopped.")
 
 
-def cmd_test() -> None:
-    need_venv()
-    if not (ROOT / "tests" / "fixtures" / "expected.json").exists():
-        run(PY, ROOT / "scripts" / "make_fixture_papers.py")
-    code = run(PY, "-m", "pytest", "tests", "-q", "-rs", "--tb=short", check=False)
-    sys.exit(code)
-
-
 def cmd_eval() -> None:
     need_venv()
     run(PY, ROOT / "scripts" / "download_data.py", check=False)
-    for module in ("fixture_eval", "scifact_nli_eval", "scifact_open_eval", "biodivergence_eval", "extraction_eval", "pairs_eval", "report_eval"):
+    for module in ("scifact_nli_eval", "scifact_open_eval", "biodivergence_eval", "extraction_eval", "pairs_eval", "report_eval"):
         run(PY, "-m", f"claimgraph.eval.{module}", check=False)
     run(PY, ROOT / "scripts" / "make_results_table.py")
 
 
-def cmd_fixtures() -> None:
-    need_venv()
-    run(PY, ROOT / "scripts" / "make_fixture_papers.py")
-
-
-COMMANDS = {"setup": cmd_setup, "up": cmd_up, "start": cmd_start, "test": cmd_test, "eval": cmd_eval, "fixtures": cmd_fixtures}
+COMMANDS = {"setup": cmd_setup, "up": cmd_up, "start": cmd_start, "eval": cmd_eval}
 
 if __name__ == "__main__":
     if len(sys.argv) != 2 or sys.argv[1] not in COMMANDS:

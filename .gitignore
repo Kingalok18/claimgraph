@@ -4,13 +4,14 @@ data/
 models/
 __pycache__/
 *.pyc
-.pytest_cache/
-.coverage
-htmlcov/
 node_modules/
 frontend/dist/
 paper/
 papers/
-tests/fixtures/*.pdf
 papers_not_analysed/
 PROJECT_INTERVIEW_GUIDE.md
+
+# Kept on this PC only, not on GitHub
+BUILD_LOG.md
+CLAIMGRAPH_IMPLEMENTATION.md
+RUN_IN_VSCODE.md

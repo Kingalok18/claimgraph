@@ -19,14 +19,13 @@ Everything runs on your own computer with free models. Your papers are not sent 
 9. [Database tables](#database-tables)
 10. [Configuration](#configuration)
 11. [Commands](#commands)
-12. [Tests](#tests)
-13. [Evaluation and results](#evaluation-and-results)
-14. [API](#api)
-15. [Project structure](#project-structure)
-16. [Optional steps](#optional-steps)
-17. [Troubleshooting](#troubleshooting)
-18. [Limitations](#limitations)
-19. [Licences](#licences)
+12. [Evaluation and results](#evaluation-and-results)
+13. [API](#api)
+14. [Project structure](#project-structure)
+15. [Optional steps](#optional-steps)
+16. [Troubleshooting](#troubleshooting)
+17. [Limitations](#limitations)
+18. [Licences](#licences)
 
 ---
 
@@ -85,11 +84,10 @@ PDF files ─► Parse (PyMuPDF) ─► Sections ─► Chunks ─► LLM extrac
 | Vector index | Qdrant, local mode (server optional) |
 | Backend | FastAPI + Uvicorn, one background job worker |
 | Frontend | React 18, TypeScript, Vite, Tailwind, TanStack Query, Cytoscape.js, react-pdf |
-| Tests | pytest, Playwright |
 
 ## Requirements
 
-- **Windows, macOS or Linux.** Built and tested on Windows 11.
+- **Windows, macOS or Linux.** Built on Windows 11.
 - **Python 3.11.**
 - **Node.js 20 or newer.** Only needed to build the interface.
 - **MySQL 8.0.** Or use SQLite with no server; see [Configuration](#configuration).
@@ -107,23 +105,21 @@ cd claimgraph
 
 Repository: **https://github.com/kingalok18/claimgraph**
 
-### 2. Create the MySQL databases
+### 2. Create the MySQL database
 
 Open the MySQL command line (or MySQL Workbench) as root and run:
 
 ```sql
 CREATE DATABASE claimgraph CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
-CREATE DATABASE claimgraph_test CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 CREATE USER 'claimgraph'@'127.0.0.1' IDENTIFIED BY 'choose-a-password';
 GRANT ALL PRIVILEGES ON claimgraph.* TO 'claimgraph'@'127.0.0.1';
-GRANT ALL PRIVILEGES ON claimgraph_test.* TO 'claimgraph'@'127.0.0.1';
 ```
 
-The app creates its tables by itself on first start. `claimgraph_test` is used only by the tests.
+The app creates its tables by itself on first start.
 
 ### 3. Create `.env`
 
-Copy `.env.example` to `.env`, then replace `CHANGE_ME` with the password you chose:
+Copy `.env.example` to `.env`, then replace `CHANGE_ME` in `DATABASE_URL` with the password you chose:
 
 ```
 copy .env.example .env        # Windows
@@ -140,9 +136,8 @@ python scripts/run.py setup
 
 This step:
 - creates the virtual environment `.venv` and installs the Python packages;
-- installs the Playwright browser into `.venv/playwright`;
 - installs the npm packages and builds the interface into `frontend/dist`;
-- creates the test PDFs and the database tables;
+- creates the database tables;
 - downloads the three models from Hugging Face (about 5 GB, once).
 
 ### 5. Add your papers
@@ -172,13 +167,14 @@ source .venv/bin/activate         # macOS / Linux
 python scripts/run.py start
 ```
 
-- The models load for 30–60 seconds, then the app opens **http://127.0.0.1:8000** in your browser.
+- After a short start-up wait, the app opens **http://127.0.0.1:8000** in your browser. No models are loaded at start: they load into memory only while a paper is analysed or a report is written, and are released afterwards.
+- Starting again after a restart does not re-analyse anything. Results are kept in MySQL; the app only checks the `paper` folder for added or removed PDFs. Analysis runs only when you press an Analyse button, and an interrupted one continues where it stopped.
 - Keep the terminal open while you use the app. Press **Ctrl+C** in it to stop.
 - MySQL must be running. On Windows that's the **MySQL80** service.
 
 ### VS Code tip
 
-Press `Ctrl+Shift+P`, choose **Python: Select Interpreter**, and pick `.venv\Scripts\python.exe`. This gives you code completion, the Testing panel, and new terminals that activate `.venv` automatically.
+Press `Ctrl+Shift+P`, choose **Python: Select Interpreter**, and pick `.venv\Scripts\python.exe`. This gives you code completion and new terminals that activate `.venv` automatically.
 
 ## Using the app
 
@@ -244,7 +240,7 @@ On a laptop CPU one paper takes about 10–15 minutes, so a whole library is bes
 | Downloaded models | Hugging Face cache: `C:\Users\<you>\.cache\huggingface\` (`~/.cache/huggingface/` on macOS/Linux) | No |
 | Fine-tuned comparison model | `models/nli-scifact/` (optional) | No |
 | Database password and keys | `.env` | No |
-| Python environment and Playwright browser | `.venv/` | No |
+| Python environment | `.venv/` | No |
 | Built interface | `frontend/dist/` (rebuilt by `setup`) | No |
 | Measured results | `results/*.json`, `results/RESULTS.md` | Yes |
 | Screenshots | `results/ui_screenshots/` | Yes |
@@ -279,7 +275,6 @@ Claim IDs look like `p1a2b3c4d5e_c3`: the paper ID (`p` plus the first 10 charac
 | Variable | Use |
 |---|---|
 | `DATABASE_URL` | Main database. MySQL: `mysql+pymysql://user:password@127.0.0.1:3306/claimgraph?charset=utf8mb4`. No server: `sqlite:///data/claimgraph.db` |
-| `TEST_MYSQL_URL` | The `claimgraph_test` database for the MySQL tests. If blank, those tests are skipped. |
 | `QDRANT_URL` | Blank uses local mode in `data/qdrant`. Set it to use a Qdrant server. |
 | `GROBID_URL` | Only used if `parsing.backend` is `grobid` |
 | `OLLAMA_BASE_URL` | Only used if the LLM provider is `ollama` |
@@ -318,9 +313,7 @@ Run these with the virtual environment active:
 ```
 python scripts/run.py setup     # install everything and download models
 python scripts/run.py start     # start the app
-python scripts/run.py test      # run all tests and print a summary
 python scripts/run.py eval      # run evaluations and write results/
-python scripts/run.py fixtures  # rebuild the test PDFs
 python scripts/run.py up        # nothing is needed on this install
 ```
 
@@ -337,22 +330,6 @@ cd frontend
 npm run build
 ```
 
-## Tests
-
-```
-python scripts/run.py test
-```
-
-- **What's covered:** parsing, quote checking, claim schema, clustering, pairing, the decision rule, report grounding, the API, the database (SQLite and MySQL), the full pipeline on four planted test papers with the real models, and browser tests of every screen with Playwright.
-- **Data:** tests use temporary folders, temporary SQLite files and the `claimgraph_test` database. They never touch your library or your `claimgraph` database.
-- **Time and memory:** the full run takes about 12 minutes on a laptop CPU and needs the memory for the real models. Close other programs first. On a low-memory machine, run it from a normal terminal rather than inside an editor.
-
-Run one file:
-
-```
-python -m pytest tests/test_relations.py -q
-```
-
 ## Evaluation and results
 
 ```
@@ -360,11 +337,10 @@ python scripts/run.py eval
 ```
 
 - Each script in `src/claimgraph/eval/` writes one file in `results/`, and `results/RESULTS.md` is the summary table. No number is written by hand.
-- **Planted test papers** (`fixture_eval`): checks the whole pipeline on four PDFs with known relations.
 - **SciFact NLI** (`scifact_nli_eval`): accuracy of the comparison model on SciFact.
 - **Extraction precision and pair accuracy on your papers:** reported once you've labelled at least 20 claims and 20 pairs on the Labelling screen. Until then they're listed as waiting, with no numbers.
 
-See `results/RESULTS.md` for what has been measured, and `BUILD_LOG.md` for how the project was built and what was decided along the way.
+See `results/RESULTS.md` for what has been measured.
 
 ## API
 
@@ -411,7 +387,6 @@ src/claimgraph/
   models_db.py    database tables
   config.py       settings from .env and configs/
 frontend/src/     the React interface
-tests/            pytest tests, test fixtures, browser tests (tests/ui)
 scripts/          run.py and helper scripts
 notebooks/        Kaggle notebook for fine-tuning the comparison model
 results/          measured results, RESULTS.md, screenshots
@@ -442,7 +417,6 @@ docker-compose.yml  optional GROBID and Qdrant servers
 | `Activate.ps1` does nothing in VS Code | The terminal is Command Prompt; use `.venv\Scripts\activate.bat` |
 | Port 8000 already in use | The app is already running in another terminal; stop it with Ctrl+C there |
 | Analysis is very slow or the PC freezes | Close other programs; lower `max_chunks_per_paper`; keep the PC plugged in and awake |
-| A test run is killed partway | Not enough memory; close other programs and run it from a normal terminal |
 | `The frontend is not built` | Run `npm ci` and `npm run build` in `frontend`, or run `setup` again |
 | Paper shows "Could not read" | It's a scanned PDF with no text layer, or a damaged file; run OCR first |
 | A model is missing in Settings | Run `setup` again to download it |
